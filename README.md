@@ -1,24 +1,30 @@
-# docker-image-mysql-5.6
+# docker-image-mysql-5.7
 
 ---
 
-## 1.1
+## 1.0
 
-修改`my.cnf`配置文件:
+### 修改`mysql.cnf`配置文件
 
 ```shell
 
-[client]
+[mysql]
 ...
 default-character-set=utf8
 
+```
+
+### 修改`mysqld.cnf`配置文件
+
+```
 [mysqld]
 ...
-explicit_defaults_for_timestamp
 default-storage-engine=INNODB
 character-set-server=utf8
 collation-server=utf8_general_ci
 ```
+
+### 测试
 
 ```shell
 mysql> SHOW VARIABLES LIKE 'character%';
@@ -34,4 +40,4 @@ mysql> SHOW VARIABLES LIKE 'character%';
 | character_set_system     | utf8                       |
 | character_sets_dir       | /usr/share/mysql/charsets/ |
 +--------------------------+----------------------------+
-```# docker-image-mysql-5.7
+```

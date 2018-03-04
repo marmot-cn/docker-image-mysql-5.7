@@ -22,6 +22,7 @@ default-character-set=utf8
 default-storage-engine=INNODB
 character-set-server=utf8
 collation-server=utf8_general_ci
+sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
 ```
 
 ### 测试
@@ -40,4 +41,11 @@ mysql> SHOW VARIABLES LIKE 'character%';
 | character_set_system     | utf8                       |
 | character_sets_dir       | /usr/share/mysql/charsets/ |
 +--------------------------+----------------------------+
+mysql> select @@sql_mode;
++--------------------------------------------+
+| @@sql_mode                                 |
++--------------------------------------------+
+| STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION |
++--------------------------------------------+
+1 row in set (0.00 sec)
 ```

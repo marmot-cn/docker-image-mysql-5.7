@@ -22,7 +22,6 @@ default-character-set=utf8
 default-storage-engine=INNODB
 character-set-server=utf8
 collation-server=utf8_general_ci
-sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
 ```
 
 ### 测试
@@ -41,6 +40,21 @@ mysql> SHOW VARIABLES LIKE 'character%';
 | character_set_system     | utf8                       |
 | character_sets_dir       | /usr/share/mysql/charsets/ |
 +--------------------------+----------------------------+
+```
+
+## 1.1 
+
+### 修改`mysqld.cnf`配置文件添加`sql_mode`
+
+```
+[mysqld]
+...
+sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+```
+
+### 测试
+
+```
 mysql> select @@sql_mode;
 +--------------------------------------------+
 | @@sql_mode                                 |

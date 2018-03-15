@@ -135,3 +135,9 @@ START GROUP_REPLICATION;
 ## 检测是否关闭成功
 SELECT * FROM performance_schema.replication_group_members;
 ```
+
+8. 在`mysql`的`route`节点如果有需要当所有节点更新完成以后重启`route`
+
+```
+sudo systemctl restart mysqlrouter.service
+```

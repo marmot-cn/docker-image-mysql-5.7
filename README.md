@@ -69,3 +69,69 @@ mysql> select @@sql_mode;
 ### 修改默认运行用户`mysql`
 
 修改默认运行用户`mysql`为`1020`.
+
+### 更新旧的用户文件系统
+
+需要依次处理各个节点.
+
+1. 使当前节点离开集群
+
+```
+docker exec -it mysql /bin/bash
+
+mysql -uxxx -pxxx -hxxx -Pxxx
+
+## 关闭组复制
+STOP GROUP_REPLICATION;
+
+## 检测是否关闭成功
+SELECT * FROM performance_schema.replication_group_members;
+```
+
+2. 关闭容器
+
+```
+docker stop mysql
+docker rm mysql
+```
+
+3. 更新镜像
+
+```
+docker pull registry.cn-hangzhou.aliyuncs.com/marmot/mysql-5.7
+```
+
+4. 创建用户
+
+```
+sudo groupadd -g 1020 mysql
+sudo useradd mysql -u 1020 -g mysql
+
+#检查
+id mysql
+```
+
+5. 修改文件所属用户和用户组
+
+```
+sudo chown -R mysql:mysql /data/mysql
+```
+
+6. 启动服务
+
+```
+docker run --net=host -v /data/mysql/config/:/etc/mysql/mysql.conf.d/ -v /data/mysql/data/:/var/lib/mysql --add-host=mgr-1:IP1 --add-host=mgr-2:IP2 --add-host=mgr-3:IP3 --name=mysql -e MYSQL_ROOT_PASSWORD=xxxx -d registry.cn-hangzhou.aliyuncs.com/marmot/mysql-5.7
+```
+
+7. 添加入集群
+
+```
+docker exec -it mysql /bin/bash
+
+mysql -uxxx -pxxx -hxxx -Pxxx
+
+START GROUP_REPLICATION;
+
+## 检测是否关闭成功
+SELECT * FROM performance_schema.replication_group_members;
+```

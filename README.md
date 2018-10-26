@@ -130,6 +130,7 @@ docker exec -it mysql /bin/bash
 
 mysql -uxxx -pxxx -hxxx -Pxxx
 
+set global group_replication_allow_local_disjoint_gtids_join=ON;
 START GROUP_REPLICATION;
 
 ## 检测是否关闭成功
@@ -140,4 +141,16 @@ SELECT * FROM performance_schema.replication_group_members;
 
 ```
 sudo systemctl restart mysqlrouter.service
+```
+
+## 1.3
+
+添加慢日志, 设定查询超过`2s`都记录下来.
+
+```
+[mysqld]
+...
+slow_query_log_file = /var/lib/mysql/slow.log
+slow_query_log = on
+long_query_time = 2 
 ```

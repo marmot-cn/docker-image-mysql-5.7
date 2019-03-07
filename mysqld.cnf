@@ -37,3 +37,9 @@ sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
 slow_query_log_file = /var/lib/mysql/slow.log
 slow_query_log = on
 long_query_time = 2
+
+max_allowed_packet=32M
+max_connections=500
+innodb_log_file_size=256M
+innodb_file_per_table=1
+innodb_buffer_pool_size=8G
